@@ -34,8 +34,6 @@ class ScrapData:
                     data_row.append("Toponimia")
 
                 count_row_proces = count_row_proces + 1
-                #cells = row.find_elements(By.TAG_NAME, thortd)
-                print(f"cells {len(cells)}")
                 if len(cells)>2:
                     if cells[index_column].text != "Entidad":
                         cells[index_column].find_element(By.TAG_NAME, "a").click()
@@ -47,7 +45,6 @@ class ScrapData:
                                 # busca el siguente parrafo despues del titulo de Toponimia
                                 toponimia_parrafo = h2.find_element(By.XPATH, "./following-sibling::p")
                                 # asigna el valor del texto del parrafo de Toponimia
-                                print(f"toponimia_parrafo : {toponimia_parrafo.text}")
                                 toponimia_data = toponimia_parrafo.text
                                 data_row.append(toponimia_data)
                             else:
@@ -113,7 +110,6 @@ class ScrapData:
             print(f"Processing ...")
             # Ejecuta el llamado de datos de las filas y cada columna
             dataRowsRecover = self.get_data_rows(info_table ,"td", count_table, index_column)
-            #print(f"****** dataRowsRecover 1 ******: {dataRowsRecover}")
         # valida si el titulo de la tabla para poblacion historica
         elif tableTitle == "Población histórica de México":
             #recupera los titulos de la tabla del thead

@@ -30,13 +30,12 @@ if __name__ == "__main__":
         # ejecuta la funcion que inicia el scrape para mexico
         scrape_data_info(driver, page_to_script, nameExcelFileMex, "mex")
 
-        """
         # nombre del excel para usa
         nameExcelFileUsa = f'DataWikipedia_usa'
         # pagina para hace el scrape de USA
         page_to_script = 'https://es.wikipedia.org/wiki/Estado_de_los_Estados_Unidos'
         # ejecuta la funcion que inicia el scrape para USA
-        scrape_data_info(driver, page_to_script, nameExcelFileUsa, "usa")"""
+        scrape_data_info(driver, page_to_script, nameExcelFileUsa, "usa")
 
     else:
         print(f"Usuario o contraseña incorrectos")
