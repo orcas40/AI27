@@ -1,8 +1,5 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from etimologia import Etimologia
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 class ScrapData:
     def __init__(self, driver, pageToScrape="", nameExcel="FileName", language="es"):
         # inicializa las variables de la clase que se usaran en la misma
