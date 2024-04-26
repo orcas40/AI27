@@ -7,13 +7,21 @@ class ScrapData:
         self.nameExcel = nameExcel
         self.language = language
         self.driver = driver
-        #Inicializa el navegador
-        """if browser.lower() == 'chrome':
-            self.driver = webdriver.Chrome()
-        elif browser.lower() == 'firefox':
-            self.driver = webdriver.Firefox()
-        else:
-            raise ValueError("Browser must be 'chrome' or 'firefox'")"""
+
+    def get_data_for_state(self, h2s_data, text_to_find):
+        #column.find_element(By.TAG_NAME, "a").click()
+        # busca los elementos con titulos en la pagina de informacion del estado
+        #h2s_data = self.driver.find_elements(By.TAG_NAME, "h2")
+        state_data = f"No tiene {text_to_find}"
+        for h2 in h2s_data:
+            # verifica si el titulo es el correcto
+            if h2.text == f"{text_to_find}[editar código · editar]":
+                # busca el siguente parrafo despues del titulo
+                info_parrafo = h2.find_element(By.XPATH, "./following-sibling::p")
+                # asigna el valor del texto del parrafo
+                state_data = info_parrafo.text
+
+        return state_data
 
     #trae los datos de la fila ya sea del theader th o del tbody td mediante la variable thortd
     def get_data_rows(self, info_table, thortd, count_table, index_column ):
@@ -39,16 +47,8 @@ class ScrapData:
                         cells[index_column].find_element(By.TAG_NAME, "a").click()
                         # busca los elementos con titulos en la pagina de informacion del estado
                         h2s_data = self.driver.find_elements(By.TAG_NAME, "h2")
-                        for h2 in h2s_data:
-                            # verifica si el titulo es Toponimia
-                            if h2.text == "Toponimia[editar código · editar]":
-                                # busca el siguente parrafo despues del titulo de Toponimia
-                                toponimia_parrafo = h2.find_element(By.XPATH, "./following-sibling::p")
-                                # asigna el valor del texto del parrafo de Toponimia
-                                toponimia_data = toponimia_parrafo.text
-                                data_row.append(toponimia_data)
-                            else:
-                                data_row.append("No tiene Toponimia")
+                        toponimia_data = self.get_data_for_state(h2s_data, "Toponimia")
+                        data_row.append(toponimia_data)
                         self.driver.back()
 
             rowsData.append(data_row)
@@ -65,29 +65,23 @@ class ScrapData:
             # Obtener todas las celdas de la fila
             cells = row.find_elements(By.TAG_NAME, thortd)
             data_row = []
-            etimologia_data = "No tiene etimologia"
+            etimologia_data = "No tiene etimología"
             try:
                 # verifica si es solo el titulo de la columna
                 if thortd == "th":
                     # agrega el titulo de la columna
-                    etimologia_data = "Etimologia"
+                    etimologia_data = "Etimología"
                 # verifica si es solo el dato de la columna
                 if thortd == "td":
                     # encuentra el elemento link y da click para ir a la pagina de la informacion del estado
                     cells[index_column].find_element(By.TAG_NAME, "a").click()
                     # busca los elementos con titulos en la pagina de informacion del estado
                     h2s_data = self.driver.find_elements(By.TAG_NAME, "h2")
-                    for h2 in h2s_data:
-                        # verifica si el titulo es etimologia
-                        if h2.text == "Etimología[editar código · editar]":
-                            # busca el siguente parrafo despues del titulo de etimologia
-                            etimologia_parrafo = h2.find_element(By.XPATH, "./following-sibling::p")
-                            # asigna el valor del texto del parrafo de etimologia
-                            etimologia_data = etimologia_parrafo.text
+                    etimologia_data = self.get_data_for_state(h2s_data, "Etimología")
                     self.driver.back()
             except Exception as e:
                 self.driver.back()
-                etimologia_data = "No tiene etimologia"
+                etimologia_data = "No tiene etimología"
 
             # agrega los valores de la columna de estado y etimologia
             data_row.append(cells[index_column].text)

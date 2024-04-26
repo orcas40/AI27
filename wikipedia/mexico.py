@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from scrapData import ScrapData
+from wikipedia.scrap_data import ScrapData
 
 class Mexico:
     #inicializa clase
@@ -10,15 +10,7 @@ class Mexico:
         self.pageToScrape = pagetoscrape
         self.nameExcel = nameexcel
         self.country = "mex"
-        #self.browser = browser.lower()
         self.driver = driver
-        """# Inicializa el navegador
-        if browser.lower() == 'chrome':
-            self.driver = webdriver.Chrome()
-        elif browser.lower() == 'firefox':
-            self.driver = webdriver.Firefox()
-        else:
-            raise ValueError("Browser must be 'chrome' or 'firefox'")"""
 
     #hace el scrape para los datos de mexico
     def scrape_mexico_data(self):
